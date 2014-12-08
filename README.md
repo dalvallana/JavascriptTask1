@@ -13,7 +13,7 @@ Specifications
 	1. `containerWidth >= (nRectangles x maxRectDim)`
 	2. `containerHeight >= (nRectangles x maxRectDim)` *(so that the "on load" processing below is always possible)*
 
-- The action takes place in a (`containerWidth` x `containerHeight`) container random-color `div` with `top-left` corder at 0,0 screen (window) coordinates.
+- The action takes place in a (`containerWidth` x `containerHeight`) container random-color `div` with `top-left` border at 0,0 screen (window) coordinates.
 
 - On load, `nRectangles` random-sized (each side `minRectDim` to `maxRectDim` pixels included) and random-color rectangles are displayed according to the following rules:
 
