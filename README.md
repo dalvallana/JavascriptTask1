@@ -1,5 +1,12 @@
+Instructions
+------------
+
+- Clone the repo
+- Write the solution according to the specifications
+- Create a pull request
+
 Specifications
-==============
+--------------
 
 - The above pseudo-constant values may vary. However, it is guaranteed that:
 
@@ -27,7 +34,5 @@ Further notes
 -------------
 
 - You may use a framework, yet raw DOM would be appreciated
-
 - Focus on clean and readable/understandable code before focusing on performance
-
 - Once done, we will ask to expose /viva voice/ the way you have proceeded to write the program
