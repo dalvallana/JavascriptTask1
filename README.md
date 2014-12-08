@@ -17,7 +17,7 @@ Specifications
 
 - On load, `nRectangles` random-sized (each side `minRectDim` to `maxRectDim` pixels included) and random-color rectangles are displayed according to the following rules:
 
-	1. They must not overlap eachother
+	1. They must not overlap each other
 	2. They must be fully contained within the container `div`
 	3. Their position is random, given the above two constraints *(The mouse cursor position at load is ignored)*
 
