@@ -8,7 +8,7 @@ Instructions
 Specifications
 --------------
 
-- The above pseudo-constant values may vary. However, it is guaranteed that:
+- The pseudo-constant defined in the code values may vary (check `index.html`). However, it is guaranteed that:
 
 	1. `containerWidth >= (nRectangles x maxRectDim)`
 	2. `containerHeight >= (nRectangles x maxRectDim)` *(so that the "on load" processing below is always possible)*
