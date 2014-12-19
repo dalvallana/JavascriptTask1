@@ -2,10 +2,11 @@
 <html>
 <head>
 <title>rectangles.html</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript">
 
 
-var	nRectangles = 3,
+var	nRectangles = 20,
 	containerWidth = 600,
 	containerHeight = 600,
 	minRectDim = 50,
@@ -55,6 +56,118 @@ Further notes:
 */
 
 /* Please write your JavaScript code here */
+
+$(function() {
+	containerDiv = $("<div></div>");
+	
+	currentMousePos = { x: -1, y: -1 };
+    containerDiv.mousemove(function(event) {
+        currentMousePos.x = event.pageX;
+        currentMousePos.y = event.pageY;
+    });
+	
+	$("body").css("margin", "0px").append(containerDiv);
+	containerDiv.css({"width": containerWidth,
+					"height": containerHeight,
+					"background-color": genRandomColor()});
+	for(var i=0; i<nRectangles; i++) {
+		var newDiv = genNewDiv();
+		var existentDivs = containerDiv.find("div");
+		containerDiv.append(newDiv);
+		existentDivs.each(function() {
+			if(overlapping(newDiv, $(this))) {
+				newDiv.remove();
+				i--;
+				return false;
+			}
+		});
+		newDiv.on("mouseenter", function() {
+			var currentDiv = $(this);
+			currentDiv.css("background-color", genRandomColor());
+			mouseTimeout = setTimeout(function() {
+				changePos(currentDiv);
+			}, 3000);
+		}).on("mouseleave", function() {
+			clearTimeout(mouseTimeout)
+		});
+		
+	}
+});
+
+var genRandomColor = function() {
+	return "rgb(" + Math.round(Math.random() * 255) + ", " + Math.round(Math.random() * 255) + ", " + Math.round(Math.random() * 255) + ")";
+};
+
+var genRandomDim = function() {
+	return Math.round((Math.random() * maxRectDim) + minRectDim);
+};
+
+var genPos = function(dimension, size) {
+	return Math.round(Math.random() * (dimension - size));
+};
+
+var genNewDiv = function() {
+	var newDiv = $("<div></div>");
+	var divWidth = genRandomDim();
+	var divHeight = genRandomDim();
+	newDiv.css({"position": "absolute",
+				"width": divWidth,
+				"height": divHeight,
+				"background-color": genRandomColor(),
+				"top": genPos(containerHeight, divHeight),
+				"left": genPos(containerWidth, divWidth)});
+	return newDiv;
+};
+
+var overlapping = function (div1, div2) {
+	var x1 = div1.offset().left;
+	var y1 = div1.offset().top;
+	var h1 = div1.outerHeight(true);
+	var w1 = div1.outerWidth(true);
+	var b1 = y1 + h1;
+	var r1 = x1 + w1;
+	var x2 = div2.offset().left;
+	var y2 = div2.offset().top;
+	var h2 = div2.outerHeight(true);
+	var w2 = div2.outerWidth(true);
+	var b2 = y2 + h2;
+	var r2 = x2 + w2;
+	if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2)
+		return false;
+	return true;
+}
+
+var changePos = function(div) {
+	var currentWidth = div.outerWidth(true);
+	var currentHeight = div.outerHeight(true);
+	var trying = true;
+	var tries = 0;
+	while(trying) {
+		trying = false;
+		tries++;
+		div.css({"top": genPos(containerHeight, currentHeight),
+				"left": genPos(containerWidth, currentWidth)});
+		var allDivs = containerDiv.find("div").not(div);
+		allDivs.each(function() {
+			if(overlapping(div, $(this)) || isUnderMouse(div)) {
+				trying = true;
+				if(tries > 1000) {
+					div.remove();
+					trying = false;
+				}
+				return false;
+			}
+		});
+	}
+};
+
+var isUnderMouse = function(div) {
+	var x = div.position().left;
+	var y = div.position().top;
+	var h = div.outerHeight(true);
+	var w = div.outerWidth(true);
+	return currentMousePos.x > x && currentMousePos.x < x+w && currentMousePos.y > y && currentMousePos.y < y+h;
+};
 
 </script>
 <!-- If using a framework, please insert <script src> here -->
